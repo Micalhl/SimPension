@@ -89,7 +89,10 @@ object TextureManager {
         child.save() // 如果修改了, 就保存一下
 
         if (entityInstance is AdyVillager) {
-            entityInstance.setEquipment(EquipmentSlot.HEAD, ItemStack(Material.PLAYER_HEAD) textured Bukkit.getOfflinePlayer(child.texture).uniqueId.toString())
+            entityInstance.setEquipment(EquipmentSlot.CHEST, ItemStack(Material.LEATHER_CHESTPLATE, 1))
+            entityInstance.setEquipment(EquipmentSlot.LEGS, ItemStack(Material.LEATHER_LEGGINGS, 1))
+            entityInstance.setEquipment(EquipmentSlot.FEET, ItemStack(Material.LEATHER_BOOTS, 1))
+            entityInstance.setEquipment(EquipmentSlot.HEAD, ItemStack(Material.PLAYER_HEAD, 1) textured Bukkit.getOfflinePlayer(child.texture).uniqueId.toString())
         }
     }
 
