@@ -1,0 +1,80 @@
+title: "{name}"
+shape:
+  - '  A   B  '
+  - '         '
+  - '  C   D  '
+  - '         '
+  - '  E   F  '
+  - 'G        '
+
+template:
+  'A':
+    material: PLAYER_HEAD
+    name: "&f{name}"
+    lore:
+      - "&f性别: &a{sex}"
+      - "&f年龄: &a{age}"
+      - "&f出生日期: &a{birth}"
+      - ""
+      - "&f左键 &7来更改孩子的名字"
+    feature: Control$changeName
+  'B':
+    material: PLAYER_HEAD
+    name: "&f传送到孩子身边"
+    feature:
+      - ==: Head
+        texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmI0YzFkYmQ4NTQ0Y2ZhZWQ5NjNkZjRkMTM5YmM4YmFjNGI3NmFjNGJiYjMwYWI4NmY3NmZiYzMxYWI5YTcwIn19fQ=="
+      - ==: Functional
+        keyword: Control$tp
+  'C':
+    material: PLAYER_HEAD
+    name: "&f将孩子传送到自己身边"
+    feature:
+      - ==: Head
+        texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTRjNDE3NDZhZjU1N2EyNGJlOGEwOTAzNjlhNTkxYWU2M2Q1Y2U5YzRiZjQwNWQzNTQyNDdkODEwYzdjNyJ9fX0="
+      - ==: Functional
+        keyword: Control$tphere
+  'D':
+    material: PLAYER_HEAD
+    name: "&f让孩子走过来"
+    lore:
+      - "&c只能走 32 格"
+    feature:
+      - ==: Head
+        texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGQ5YjY4OTE1YjE0NzJkODllNWUzYTliYTZjOTM1YWFlNjAzZDEyYzE0NTRmMzgyMjgyNWY0M2RmZThhMmNhYyJ9fX0="
+      - ==: Functional
+        keyword: Control$walk
+  'E':
+    material: PLAYER_HEAD
+    name: "&f孩子是否跟随父母"
+    lore:
+      - "&f当前状态: {follow}"
+      - "&f如果不跟随父母, 孩子会自由移动"
+      - "&c如果孩子离父母有点远, 孩子不会移动."
+      - ""
+      - "&7点击切换!"
+    feature:
+      - ==: Head
+        texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGQ5YjY4OTE1YjE0NzJkODllNWUzYTliYTZjOTM1YWFlNjAzZDEyYzE0NTRmMzgyMjgyNWY0M2RmZThhMmNhYyJ9fX0="
+      - ==: Functional
+        keyword: Control$follow
+  'F':
+    material: PLAYER_HEAD
+    name: "&f安置孩子"
+    lore:
+      - "&f孩子目前是否在家: {view}"
+      - ""
+      - "&f你可以让孩子在家,"
+      - "&f在家的话孩子就不会显示"
+      - "&f除非你让Ta出门."
+      - ""
+      - "&7点击切换!"
+    feature:
+      - ==: Head
+        texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjgzN2YzZGIxM2E0MGQ0OTc5ZGU3NzE3OWUxOGFmNmUwYmMzY2MzOWVhNmFiYTUxOGJiMDgwYTZmMDFhNDAifX19"
+      - ==: Functional
+        keyword: Control$view
+  'G':
+    material: RED_STAINED_GLASS_PANE
+    name: "&c&l返回孩子列表"
+    feature: Control$backToList

@@ -1,0 +1,25 @@
+Limit: 3 # 计划生育, 生的孩子超过这个人数开始扣款
+Money: "100000+20000*more" # 公式, more 为超生人数
+Sex: 100 # 双方互相右键多少次怀孕?
+Pregnant: 240000 # 意为怀孕十天(游戏里的十天), 一天为 24000 游戏刻
+Year: 288000 # 多少为一年, 一年长一岁
+World: "techbedrock" # 以哪个世界的时间为准计算时间
+Spawn: "techbedrock~100,100,100" # 孩子出生地
+WalkRadius: 15.0 # 生物自动搜索多少格范围内的父亲或母亲, 并择最近者跟从
+DefaultName: "&e{0} &6与&e {1} &6的 &b{2}" # 爸爸与妈妈的儿子/女儿
+DateFormat: "yyyy-DD-mm HH:mm:ss"
+Son: "儿子"
+Daughter: "女儿"
+Male: "男"
+Female: "女"
+Adult: 18
+Died: " &c(已去世)" # 菜单中死亡了之后名字后面显示
+Yes: "是"
+No: "否"
+Book: "&5请在书中输入孩子名称"
+Database:
+  host: localhost
+  port: 3306
+  user: root
+  password: password
+  database: minecraft

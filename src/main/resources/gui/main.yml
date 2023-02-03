@@ -1,0 +1,33 @@
+title: "我的孩子"
+shape:
+  - '         '
+  - ' AAAAAAA '
+  - ' AAAAAAA '
+  - ' AAAAAAA '
+  - ' AAAAAAA '
+  - '  P X N  '
+
+template:
+  'X':
+    material: BARRIER
+    name: "&c&l关闭菜单"
+    feature:
+      - ==: Close
+  'P':
+    material: ARROW
+    name: "&r上一页"
+    feature: Previous
+  'N':
+    material: ARROW
+    name: "&r下一页"
+    feature: Next
+  'A':
+    material: PLAYER_HEAD
+    name: "&f{name}"
+    lore:
+      - "&f性别: &a{sex}"
+      - "&f年龄: &a{age}"
+      - "&f出生日期: &a{birth}"
+      - ""
+      - "&f左键 打开偏好设置"
+    feature: Child$information
