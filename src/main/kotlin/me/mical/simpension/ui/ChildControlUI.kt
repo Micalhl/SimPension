@@ -230,7 +230,8 @@ object ChildControlUI {
                     entityInstance.registerController(ControllerRandomStrollLand(entityInstance))
                     entityInstance.unregisterController(ControllerFollowParents::class.java)
                 }
-                event.clicker.updateInventory()
+                event.clicker.closeInventory()
+                open(event.clicker, child)
             }
         }
     }

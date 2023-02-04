@@ -111,6 +111,7 @@ object ChildListUI {
             val child = args[0] as Child
             if (event.virtualEvent().clickType == ClickType.LEFT) {
                 if (child.age >= child.deadline) return@onClick
+                if (child.age == -1) return@onClick
                 ChildControlUI.open(event.clicker, child)
             }
         }

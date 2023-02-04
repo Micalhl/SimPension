@@ -7,15 +7,16 @@ World: "techbedrock" # 以哪个世界的时间为准计算时间
 Spawn: "techbedrock~100,100,100" # 孩子出生地
 WalkRadius: 15.0 # 生物自动搜索多少格范围内的父亲或母亲, 并择最近者跟从
 DefaultName: "&e{0} &6与&e {1} &6的 &b{2}" # 爸爸与妈妈的儿子/女儿
-DateFormat: "yyyy-DD-mm HH:mm:ss"
+DateFormat: "yyyy-MM-dd HH:mm:ss"
 Son: "儿子"
 Daughter: "女儿"
 Male: "男"
 Female: "女"
 Adult: 18
 Died: " &c(已去世)" # 菜单中死亡了之后名字后面显示
-Yes: "是"
-No: "否"
+YesOption: "是"
+NoOption: "否"
+State: "&d[怀孕中]&r"
 Book: "&5请在书中输入孩子名称"
 Database:
   host: localhost

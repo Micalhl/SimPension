@@ -39,7 +39,7 @@ import java.util.*
 val simpleDateFormat = SimpleDateFormat(ConfigReader.dateForamt)
 
 infix fun ItemStack.applyChild(child: Child): ItemStack {
-    return singletons {
+    val result = singletons {
         when (it) {
             "name" -> child.name
             "age" -> child.age.toString()
@@ -51,5 +51,9 @@ infix fun ItemStack.applyChild(child: Child): ItemStack {
         }
     }.modifyMeta<ItemMeta> {
         setDisplayName(displayName.replaceWithOrder(child.name, "name") + if (child.age >= child.deadline) ConfigReader.died.colored() else "")
-    } textured Bukkit.getOfflinePlayer(child.texture).uniqueId.toString()
+    }
+    if (child.texture.isNotEmpty()) {
+        result textured Bukkit.getOfflinePlayer(child.texture).uniqueId.toString()
+    }
+    return result
 }

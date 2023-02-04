@@ -90,6 +90,9 @@ object ConfigReader {
     @ConfigNode("Book")
     var book = "&f请在书中输入孩子名称"
 
+    @ConfigNode("State")
+    var state = "&d[怀孕中]"
+
     val database: ConfigurationSection
         get() = config.getConfigurationSection("Database") ?: error("no database section")
 }
