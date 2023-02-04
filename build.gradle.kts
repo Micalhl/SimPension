@@ -54,6 +54,7 @@ dependencies {
     compileOnly("at.pcgamingfreaks:MarriageMaster-API-Bukkit:2.6.8")
     compileOnly("ink.ptms.adyeshach:all:2.0.0-snapshot-10")
     compileOnly("com.mojang:authlib:1.5.25")
+    compileOnly("net.skinsrestorer:skinsrestorer-api:14.2.8")
     taboo("org.tabooproject.taboolib:module-parrotx:1.4.19")
     compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("libs"))

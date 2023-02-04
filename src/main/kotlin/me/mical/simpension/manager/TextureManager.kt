@@ -25,6 +25,7 @@ import ink.ptms.adyeshach.impl.entity.controller.ControllerRandomLookaround
 import ink.ptms.adyeshach.impl.entity.controller.ControllerRandomStrollLand
 import me.mical.simpension.ConfigReader
 import me.mical.simpension.controller.ControllerFollowParents
+import me.mical.simpension.network.NetworkManager
 import me.mical.simpension.`object`.Child
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -89,15 +90,13 @@ object TextureManager {
         child.save() // 如果修改了, 就保存一下
 
         if (entityInstance is AdyVillager) {
-            entityInstance.setEquipment(EquipmentSlot.CHEST, ItemStack(Material.LEATHER_CHESTPLATE, 1))
-            entityInstance.setEquipment(EquipmentSlot.LEGS, ItemStack(Material.LEATHER_LEGGINGS, 1))
-            entityInstance.setEquipment(EquipmentSlot.FEET, ItemStack(Material.LEATHER_BOOTS, 1))
-            entityInstance.setEquipment(EquipmentSlot.HEAD, ItemStack(Material.PLAYER_HEAD, 1) textured Bukkit.getOfflinePlayer(child.texture).uniqueId.toString())
+            val head = ItemStack(Material.PLAYER_HEAD, 1)
+            val uuid = Bukkit.getOfflinePlayer(child.texture).uniqueId
+            if (NetworkManager.handler.containsKey(uuid)) {
+                head textured NetworkManager.getTextureUrlEnd(Bukkit.getOfflinePlayer(child.texture).uniqueId)
+            }
+            entityInstance.setEquipment(EquipmentSlot.HEAD, head)
         }
-    }
-
-    fun hide(child: Child) {
-        entities[child.uuid]?.despawn()
     }
 
     fun destroy(child: Child) {

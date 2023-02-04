@@ -25,6 +25,7 @@ import org.serverct.parrot.parrotx.mechanism.Reloadable
 import org.serverct.parrot.parrotx.ui.MenuComponent
 import org.serverct.parrot.parrotx.ui.config.MenuConfiguration
 import org.serverct.parrot.parrotx.ui.feature.util.MenuFunctionBuilder
+import taboolib.common5.mirrorNow
 import taboolib.module.chat.colored
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.Configuration
@@ -57,45 +58,47 @@ object ChildListUI {
             config = MenuConfiguration(source)
         }
         player.sendLang("open-menu")
-        player.openMenu<Linked<Child>>(config.title().colored()) {
-            virtualize()
-            val (shape, templates) = config
-            rows(shape.rows)
-            val slots = shape["Child\$information"].toList()
-            slots(slots)
-            elements { ChildManager.childs.filter { it.husband == player.uniqueId || it.wife == player.uniqueId } }
+        mirrorNow("SimPension:OpenUI:ChildList") {
+            player.openMenu<Linked<Child>>(config.title().colored()) {
+                virtualize()
+                val (shape, templates) = config
+                rows(shape.rows)
+                val slots = shape["Child\$information"].toList()
+                slots(slots)
+                elements { ChildManager.children.filter { it.husband == player.uniqueId || it.wife == player.uniqueId } }
 
-            onBuild { _, it ->
-                shape.all("Child\$information", "Previous", "Next", "Close") { slot, index, item, _ ->
-                    it.setItem(slot, item(slot, index))
+                onBuild { _, it ->
+                    shape.all("Child\$information", "Previous", "Next", "Close") { slot, index, item, _ ->
+                        it.setItem(slot, item(slot, index))
+                    }
                 }
-            }
 
-            val template = templates.require("Child\$information")
-            onGenerate { _, member, index, slot ->
-                template(slot, index, member)
-            }
-
-            onClick { event, member ->
-                template.handle(event, member)
-            }
-
-            shape["Previous"].first().let { slot ->
-                setPreviousPage(slot) { it, _ ->
-                    templates("Previous", slot, it)
+                val template = templates.require("Child\$information")
+                onGenerate { _, member, index, slot ->
+                    template(slot, index, member)
                 }
-            }
 
-            shape["Next"].first().let { slot ->
-                setNextPage(slot) { it, _ ->
-                    templates("Next", slot, it)
+                onClick { event, member ->
+                    template.handle(event, member)
                 }
-            }
 
-            onClick { event ->
-                event.isCancelled = true
-                if (event.rawSlot in shape && event.rawSlot !in slots) {
-                    templates[event.rawSlot]?.handle(event)
+                shape["Previous"].first().let { slot ->
+                    setPreviousPage(slot) { it, _ ->
+                        templates("Previous", slot, it)
+                    }
+                }
+
+                shape["Next"].first().let { slot ->
+                    setNextPage(slot) { it, _ ->
+                        templates("Next", slot, it)
+                    }
+                }
+
+                onClick { event ->
+                    event.isCancelled = true
+                    if (event.rawSlot in shape && event.rawSlot !in slots) {
+                        templates[event.rawSlot]?.handle(event)
+                    }
                 }
             }
         }

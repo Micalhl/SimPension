@@ -24,6 +24,7 @@ import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import taboolib.common.platform.function.info
 import taboolib.common.util.random
+import taboolib.common5.mirrorNow
 import taboolib.platform.util.sendLang
 import java.util.UUID
 
@@ -36,7 +37,7 @@ import java.util.UUID
  */
 object ChildManager {
 
-    val childs = arrayListOf<Child>()
+    val children = arrayListOf<Child>()
 
     fun init() {
         info("正在从数据库中加载数据...")
@@ -77,7 +78,7 @@ object ChildManager {
                     this.task = task
                     this.birthdayReal = birthdayReal
                 }
-                childs.add(child)
+                children.add(child)
             }
         }
         info("成功从数据库中加载数据!")
@@ -96,45 +97,48 @@ object ChildManager {
             this.lastBirthday = this.birthday
         }.also {
             it.save()
-            childs.add(it)
+            children.add(it)
         }
     }
 
     fun tick() {
-        val world = Bukkit.getWorld(ConfigReader.world) ?: return
-        val time = world.fullTime
-        childs.filter { it.age == -1 }.forEach {
-            if (it.birthday <= time) { // 要生了
-                it.age += 1
-                TextureManager.display(it)
-                it.husband().player?.sendLang("birth")
-                it.wife().player?.sendLang("birth")
-                if (it.age >= it.deadline) {
-                    it.husband().player?.sendLang("died", it.name)
-                    it.wife().player?.sendLang("died", it.name)
-                    it.view = false
-                    TextureManager.destroy(it)
+        mirrorNow("SimPension:Tick") {
+            val world = Bukkit.getWorld(ConfigReader.world) ?: return@mirrorNow
+            val time = world.fullTime
+            children.filter { it.age == -1 }.forEach {
+                if (it.birthday <= time) { // 要生了
+                    it.age += 1
+                    TextureManager.display(it)
+                    it.husband().player?.sendLang("birth")
+                    it.wife().player?.sendLang("birth")
+                    it.birthdayReal = System.currentTimeMillis()
+                    if (it.age >= it.deadline) {
+                        it.husband().player?.sendLang("died", it.name)
+                        it.wife().player?.sendLang("died", it.name)
+                        it.view = false
+                        TextureManager.destroy(it)
+                    }
+                    it.save()
                 }
-                it.save()
             }
-        }
-        childs.filter { it.age < it.deadline }.forEach {
-            if ((it.lastBirthday + ConfigReader.year) <= time) { // 喝, 长大啦?
-                it.age += 1 // 喝, 必须的.
-                it.lastBirthday = time
-                if (it.age >= it.deadline) {
-                    it.husband().player?.sendLang("died", it.name)
-                    it.wife().player?.sendLang("died", it.name)
-                    it.view = false
-                    TextureManager.destroy(it)
-                    return
-                }
-                it.husband().player?.sendLang("birthday", it.name, it.age)
-                it.wife().player?.sendLang("birthday", it.name, it.age)
-                it.save()
-                if (it.age >= ConfigReader.adult) {
-                    TextureManager.destroy(it)
-                    TextureManager.display(it) // 重新显示一下, 因为成年需要从 AdyVillager 变为 AdyHuman
+            children.filter { it.age < it.deadline }.forEach {
+                if ((it.lastBirthday + ConfigReader.year) <= time) { // 喝, 长大啦?
+                    it.age += 1 // 喝, 必须的.
+                    it.lastBirthday = time
+                    if (it.age >= it.deadline) {
+                        it.husband().player?.sendLang("died", it.name)
+                        it.wife().player?.sendLang("died", it.name)
+                        it.view = false
+                        TextureManager.destroy(it)
+                        return@mirrorNow
+                    }
+                    it.husband().player?.sendLang("birthday", it.name, it.age)
+                    it.wife().player?.sendLang("birthday", it.name, it.age)
+                    it.save()
+                    if (it.age >= ConfigReader.adult) {
+                        TextureManager.destroy(it)
+                        TextureManager.display(it) // 重新显示一下, 因为成年需要从 AdyVillager 变为 AdyHuman
+                    }
                 }
             }
         }

@@ -59,7 +59,7 @@ object SexManager {
         if (!player.isPartner(partner)) return // 跟别人对象做你妈爱呢?
         val data1 = player.uuid to partner.uuid
         val data2 = partner.uuid to player.uuid
-        val amount = ChildManager.childs.filter { it.age < it.deadline }
+        val amount = ChildManager.children.filter { it.age < it.deadline }
             .filter { (it.husband == player.uuid && it.wife == partner.uuid) || (it.husband == partner.uuid && it.wife == player.uuid) }
             .size + 1 // +1 是因为算上要生的这个孩子
         if (amount > ConfigReader.limit && !planning.contains(data1) && !planning.contains(data2)) {

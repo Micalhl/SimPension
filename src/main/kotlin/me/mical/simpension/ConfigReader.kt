@@ -93,6 +93,9 @@ object ConfigReader {
     @ConfigNode("State")
     var state = "&d[怀孕中]"
 
+    @ConfigNode("HaveNoBirthdayTip")
+    var haveNoBirthdayTip = "&c尚未出生!"
+
     val database: ConfigurationSection
         get() = config.getConfigurationSection("Database") ?: error("no database section")
 }

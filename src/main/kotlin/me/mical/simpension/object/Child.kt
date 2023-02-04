@@ -52,7 +52,7 @@ class Child {
     var view = true
     var follow = true
     var task = ""
-    var birthdayReal = System.currentTimeMillis()
+    var birthdayReal = 0L
 
     fun save() {
         if (TextureManager.entities.containsKey(uuid)) {

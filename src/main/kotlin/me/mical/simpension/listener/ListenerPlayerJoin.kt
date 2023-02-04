@@ -31,6 +31,6 @@ object ListenerPlayerJoin {
 
     @SubscribeEvent
     fun e(e: PlayerJoinEvent) {
-        NetworkManager.downloadPlayerSkinTexture(e.player)
+        NetworkManager.cachePlayerTextureAndUUID(e.player)
     }
 }

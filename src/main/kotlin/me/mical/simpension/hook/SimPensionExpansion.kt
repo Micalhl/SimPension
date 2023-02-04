@@ -39,7 +39,7 @@ object SimPensionExpansion : PlaceholderExpansion {
         if (player == null) return ""
         return when (args.lowercase()) {
             "state" -> {
-                return if (ChildManager.childs.any { it.age == -1 && it.wife == player.uniqueId }) ConfigReader.state.colored() else ""
+                return if (ChildManager.children.any { it.age == -1 && it.wife == player.uniqueId }) ConfigReader.state.colored() else ""
             }
             else -> ""
         }

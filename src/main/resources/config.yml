@@ -17,6 +17,7 @@ Died: " &c(已去世)" # 菜单中死亡了之后名字后面显示
 YesOption: "是"
 NoOption: "否"
 State: "&d[怀孕中]&r"
+HaveNoBirthdayTip: "&c尚未出生!"
 Book: "&5请在书中输入孩子名称"
 Database:
   host: localhost

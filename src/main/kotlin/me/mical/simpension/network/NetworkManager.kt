@@ -44,23 +44,32 @@ import java.util.*
  */
 object NetworkManager {
 
-    private val handler = arrayListOf<UUID>() // 缓存一下, 避免开服之后重复下载.
+    // 离线 UUID, 正版 UUID
+    val handler = hashMapOf<UUID, Configuration>() // 缓存一下, 避免开服之后重复下载.
 
     private const val ashconURL = "https://api.ashcon.app/mojang/v2/user/"
 
-    private fun getSkinTextureUrl(username: String): String {
-        val json = Configuration.loadFromString(URL("$ashconURL$username").openStream().readBytes().toString(StandardCharsets.UTF_8), Type.JSON)
+    private fun getAshconData(username: String): Configuration {
+        val json = Configuration.loadFromString(
+            URL("$ashconURL$username").openStream().readBytes().toString(StandardCharsets.UTF_8), Type.JSON
+        )
         if (!json.contains("uuid")) {
             warning("无法从 Ashcon API 获取到玩家 $username 的皮肤.")
-            return ""
+            return Configuration.empty(Type.JSON)
         }
-        return json.getString("textures.skin.url")!!
+        return json
     }
 
-    fun downloadPlayerSkinTexture(player: Player) {
+    fun getTextureUrlEnd(uniqueId: UUID): String {
+        val ashconData = handler[uniqueId] ?: return ""
+        return ashconData.getString("textures.skin.url")!!.removePrefix("http://textures.minecraft.net/texture/")
+    }
+
+    fun cachePlayerTextureAndUUID(player: Player) {
         if (handler.contains(player.uniqueId)) return
         submitAsync {
-            val textureUrl = getSkinTextureUrl(player.name)
+            val ashconData = getAshconData(player.name)
+            val textureUrl = ashconData.getString("textures.skin.url")!!
             if (textureUrl.isEmpty()) return@submitAsync
             val url = URL(textureUrl)
             val conn = url.openConnection() as HttpURLConnection
@@ -79,7 +88,7 @@ object NetworkManager {
                 }
                 info("成功下载${player.name}的皮肤!正在尝试应用...")
                 CommandAPI.uploadSkin(Bukkit.getConsoleSender(), "${player.name}.png", AdyeshachNetworkAPI.SkinModel.DEFAULT)
-                handler.add(player.uniqueId)
+                handler[player.uniqueId] = ashconData
             } catch (ex: IOException) {
                 info("下载${player.name}的皮肤时出错,皮肤可能无法正常加载!")
                 ex.printStackTrace()

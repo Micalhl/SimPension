@@ -18,9 +18,12 @@ package me.mical.simpension.command
 
 import me.mical.simpension.ui.ChildListUI
 import org.bukkit.entity.Player
+import taboolib.common.platform.ProxyCommandSender
 import taboolib.common.platform.command.CommandBody
 import taboolib.common.platform.command.CommandHeader
 import taboolib.common.platform.command.mainCommand
+import taboolib.common.platform.command.subCommand
+import taboolib.common5.Mirror
 
 /**
  * SimPension
@@ -36,6 +39,13 @@ object SimPension {
     val main = mainCommand {
         execute<Player> { user, _, _ ->
             ChildListUI.open(user)
+        }
+    }
+
+    @CommandBody
+    val mirror = subCommand {
+        execute<ProxyCommandSender> { sender, _, _ ->
+            Mirror.report(sender)
         }
     }
 }

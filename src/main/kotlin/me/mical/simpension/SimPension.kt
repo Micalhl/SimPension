@@ -70,9 +70,9 @@ object SimPension : Plugin() {
     }
 
     override fun onActive() {
-        onlinePlayers.forEach { NetworkManager.downloadPlayerSkinTexture(it) }
+        onlinePlayers.forEach { NetworkManager.cachePlayerTextureAndUUID(it) }
         info("正在为所有玩家的在家门外的孩子生成实体...")
-        ChildManager.childs.filter { it.age != -1 && it.view }.forEach {
+        ChildManager.children.filter { it.age != -1 && it.view }.forEach {
             try {
                 TextureManager.display(it)
                 info("已生成${it.husband().name}和${it.wife().name}的孩子实体:${it.name}")
@@ -83,7 +83,7 @@ object SimPension : Plugin() {
         }
         Database.prepareClose {
             info("正在保存数据...")
-            ChildManager.childs.forEach { it.save() }
+            ChildManager.children.forEach { it.save() }
             info("正在销毁所有孩子的实体...")
             TextureManager.entities.values.forEach { it.remove() }
         }

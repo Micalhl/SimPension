@@ -17,6 +17,7 @@
 package me.mical.simpension.ui.util
 
 import me.mical.simpension.ConfigReader
+import me.mical.simpension.network.NetworkManager
 import me.mical.simpension.`object`.Child
 import org.bukkit.Bukkit
 import org.bukkit.inventory.ItemStack
@@ -39,21 +40,22 @@ import java.util.*
 val simpleDateFormat = SimpleDateFormat(ConfigReader.dateForamt)
 
 infix fun ItemStack.applyChild(child: Child): ItemStack {
+    val uuid = Bukkit.getOfflinePlayer(child.texture).uniqueId
     val result = singletons {
         when (it) {
             "name" -> child.name
             "age" -> child.age.toString()
             "sex" -> child.sex()
             "follow" -> if (child.follow) ConfigReader.yes else ConfigReader.no
-            "view" -> if (child.view) ConfigReader.yes else ConfigReader.no
-            "birth" -> simpleDateFormat.format(Date(child.birthdayReal))
+            "view" -> if (child.view) ConfigReader.no else ConfigReader.yes
+            "birth" -> if (child.birthdayReal == 0L) ConfigReader.haveNoBirthdayTip.colored() else simpleDateFormat.format(Date(child.birthdayReal))
             else -> null
         }
     }.modifyMeta<ItemMeta> {
         setDisplayName(displayName.replaceWithOrder(child.name, "name") + if (child.age >= child.deadline) ConfigReader.died.colored() else "")
     }
-    if (child.texture.isNotEmpty()) {
-        result textured Bukkit.getOfflinePlayer(child.texture).uniqueId.toString()
+    if (child.texture.isNotEmpty() && NetworkManager.handler.containsKey(uuid)) {
+        result textured NetworkManager.getTextureUrlEnd(Bukkit.getOfflinePlayer(child.texture).uniqueId)
     }
     return result
 }

@@ -32,6 +32,7 @@ import org.serverct.parrot.parrotx.mechanism.Reloadable
 import org.serverct.parrot.parrotx.ui.MenuComponent
 import org.serverct.parrot.parrotx.ui.config.MenuConfiguration
 import org.serverct.parrot.parrotx.ui.feature.util.MenuFunctionBuilder
+import taboolib.common5.mirrorNow
 import taboolib.module.chat.colored
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.Configuration
@@ -64,22 +65,24 @@ object ChildControlUI {
         if (!::config.isInitialized) {
             config = MenuConfiguration(source)
         }
-        player.openMenu<Basic>(config.title("name" to { child.name }).colored()) {
-            virtualize()
-            val (shape, templates) = config
-            rows(shape.rows)
-            map(*shape.array)
+        mirrorNow("SimPension:OpenUI:ChildControl") {
+            player.openMenu<Basic>(config.title("name" to { child.name }).colored()) {
+                virtualize()
+                val (shape, templates) = config
+                rows(shape.rows)
+                map(*shape.array)
 
-            onBuild { _, inventory ->
-                shape.all { slot, index, item, _ ->
-                    inventory.setItem(slot, item(slot, index, child))
+                onBuild { _, inventory ->
+                    shape.all { slot, index, item, _ ->
+                        inventory.setItem(slot, item(slot, index, child))
+                    }
                 }
-            }
 
-            onClick {
-                it.isCancelled = true
-                if (it.rawSlot in shape) {
-                    templates[it.rawSlot]?.handle(it, child)
+                onClick {
+                    it.isCancelled = true
+                    if (it.rawSlot in shape) {
+                        templates[it.rawSlot]?.handle(it, child)
+                    }
                 }
             }
         }
@@ -194,7 +197,7 @@ object ChildControlUI {
                 if (child.view) {
                     TextureManager.display(child)
                 } else {
-                    TextureManager.hide(child)
+                    TextureManager.destroy(child)
                 }
                 event.clicker.closeInventory()
                 open(event.clicker, child)
