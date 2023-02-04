@@ -72,10 +72,10 @@ class ControllerFollowParents(entity: EntityInstance, private val child: Child, 
             }
             when {
                 distanceMother < distanceFather -> {
-                    entity!!.controllerMoveTo(child.wife().player!!.location)
+                    child.wife().player?.let { entity!!.controllerMoveTo(it.location) }
                 }
                 distanceFather <= distanceMother -> {
-                    entity!!.controllerMoveTo(child.husband().player!!.location)
+                    child.husband().player?.let { entity!!.controllerMoveTo(it.location) }
                 }
                 else -> {
                 }
