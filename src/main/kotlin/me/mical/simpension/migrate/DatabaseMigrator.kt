@@ -18,6 +18,7 @@ package me.mical.simpension.migrate
 
 import me.mical.simpension.ConfigReader
 import me.mical.simpension.manager.ChildManager
+import me.mical.simpension.manager.TextureManager
 import me.mical.simpension.network.NetworkManager
 import me.mical.simpension.`object`.Child
 import me.mical.simpension.util.parseLoc
@@ -26,6 +27,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 import org.serverct.parrot.parrotx.function.textured
+import taboolib.common.platform.function.info
 import taboolib.module.database.ColumnTypeSQL
 import taboolib.module.database.HostSQL
 import taboolib.module.database.Table
@@ -146,6 +148,17 @@ object DatabaseMigrator {
             }
             deprecatedChildren.add(child)
         }
-
+        deprecatedChildren.forEach { it.save() }
+        ChildManager.init()
+        info("正在为所有玩家的在家门外的孩子生成实体...")
+        ChildManager.children.filter { it.age != -1 && it.view }.forEach {
+            try {
+                TextureManager.display(it)
+                info("已生成${it.husband().name}和${it.wife().name}的孩子实体:${it.name}")
+            } catch (ex: Throwable) {
+                info("生成${it.husband().name}和${it.wife().name}的孩子(${it.name})失败!请查看下方报错!")
+                ex.printStackTrace()
+            }
+        }
     }
 }

@@ -65,6 +65,13 @@ object ChildManager {
                 val follow = getBoolean("follow")
                 val task = getString("task")
                 val birthdayReal = getLong("birthdayReal")
+                val inventory = getString("inventory")
+                val head = getString("head")
+                val chest = getString("chest")
+                val legs = getString("legs")
+                val boots = getString("boots")
+                val hand = getString("hand")
+                val offhand = getString("offhand")
                 val child = Child().apply {
                     this.husband = husband
                     this.wife = wife
@@ -82,6 +89,13 @@ object ChildManager {
                     this.follow = follow
                     this.task = task
                     this.birthdayReal = birthdayReal
+                    this.inventory = inventory
+                    this.head = head
+                    this.chest = chest
+                    this.legs = legs
+                    this.boots = boots
+                    this.hand = hand
+                    this.offhand = offhand
                 }
                 children.add(child)
             }

@@ -58,7 +58,11 @@ object ChildInventoryUI {
                 }
             }
             onClose {
-                child.inventory = it.inventory.serializeToBase64()
+                if (it.inventory.isEmpty) {
+                    child.inventory = ""
+                } else {
+                    child.inventory = it.inventory.serializeToBase64()
+                }
                 child.save()
             }
         }
