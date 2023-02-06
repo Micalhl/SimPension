@@ -19,19 +19,16 @@ package me.mical.simpension.manager
 import ink.ptms.adyeshach.core.Adyeshach
 import ink.ptms.adyeshach.core.entity.EntityInstance
 import ink.ptms.adyeshach.core.entity.EntityTypes
+import ink.ptms.adyeshach.core.entity.type.AdyEntityLiving
 import ink.ptms.adyeshach.core.entity.type.AdyHuman
 import ink.ptms.adyeshach.core.entity.type.AdyVillager
 import ink.ptms.adyeshach.impl.entity.controller.ControllerRandomLookaround
 import ink.ptms.adyeshach.impl.entity.controller.ControllerRandomStrollLand
 import me.mical.simpension.ConfigReader
 import me.mical.simpension.controller.ControllerFollowParents
-import me.mical.simpension.network.NetworkManager
 import me.mical.simpension.`object`.Child
-import org.bukkit.Bukkit
-import org.bukkit.Material
+import me.mical.simpension.util.deserializeItemStackFromBase64
 import org.bukkit.inventory.EquipmentSlot
-import org.bukkit.inventory.ItemStack
-import org.serverct.parrot.parrotx.function.textured
 import taboolib.common.util.random
 import taboolib.module.chat.colored
 import java.util.UUID
@@ -89,14 +86,12 @@ object TextureManager {
         if (entityInstance is AdyHuman) entityInstance.setTexture(child.texture) // 防止没有加载皮肤纹理
         child.save() // 如果修改了, 就保存一下
 
-        if (entityInstance is AdyVillager) {
-            val head = ItemStack(Material.PLAYER_HEAD, 1)
-            val uuid = Bukkit.getOfflinePlayer(child.texture).uniqueId
-            if (NetworkManager.handler.containsKey(uuid)) {
-                head textured NetworkManager.getTextureUrlEnd(Bukkit.getOfflinePlayer(child.texture).uniqueId)
-            }
-            entityInstance.setEquipment(EquipmentSlot.HEAD, head)
-        }
+        if (child.head.isNotEmpty()) (entityInstance as AdyEntityLiving).setEquipment(EquipmentSlot.HEAD, child.head.deserializeItemStackFromBase64())
+        if (child.chest.isNotEmpty()) (entityInstance as AdyEntityLiving).setEquipment(EquipmentSlot.CHEST, child.chest.deserializeItemStackFromBase64())
+        if (child.legs.isNotEmpty()) (entityInstance as AdyEntityLiving).setEquipment(EquipmentSlot.LEGS, child.legs.deserializeItemStackFromBase64())
+        if (child.boots.isNotEmpty()) (entityInstance as AdyEntityLiving).setEquipment(EquipmentSlot.FEET, child.boots.deserializeItemStackFromBase64())
+        if (child.hand.isNotEmpty()) (entityInstance as AdyEntityLiving).setEquipment(EquipmentSlot.HAND, child.hand.deserializeItemStackFromBase64())
+        if (child.offhand.isNotEmpty()) (entityInstance as AdyEntityLiving).setEquipment(EquipmentSlot.OFF_HAND, child.offhand.deserializeItemStackFromBase64())
     }
 
     fun destroy(child: Child) {

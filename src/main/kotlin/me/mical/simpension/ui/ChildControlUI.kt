@@ -23,6 +23,7 @@ import ink.ptms.adyeshach.module.command.EntitySource
 import ink.ptms.adyeshach.module.command.multiControl
 import me.mical.simpension.ConfigReader
 import me.mical.simpension.controller.ControllerFollowParents
+import me.mical.simpension.editor.MetaEquipment
 import me.mical.simpension.manager.TextureManager
 import me.mical.simpension.`object`.Child
 import me.mical.simpension.ui.util.applyChild
@@ -115,39 +116,49 @@ object ChildControlUI {
         onClick { (_, _, event, args) ->
             val child = args[0] as Child
             if (child.age >= child.deadline) return@onClick
-            if (event.virtualEvent().clickType == ClickType.LEFT) {
-                event.clicker.closeInventory()
-                if (!child.view) {
-                    event.clicker.sendLang("fail", child.name)
-                    return@onClick
+            if (event.virtualEvent().clickType != ClickType.LEFT && event.virtualEvent().clickType != ClickType.RIGHT) return@onClick
+            event.clicker.closeInventory()
+            if (!child.view) {
+                event.clicker.sendLang("fail", child.name)
+                return@onClick
+            }
+            if (TextureManager.entities[child.uuid] == null) {
+                event.clicker.sendLang("internal-error")
+                return@onClick
+            }
+            when (event.virtualEvent().clickType) {
+                ClickType.LEFT -> {
+                    event.clicker.teleport(TextureManager.entities[child.uuid]!!.getLocation())
+                    event.clicker.sendLang("tp", child.name)
                 }
-                if (TextureManager.entities[child.uuid] == null) {
-                    event.clicker.sendLang("internal-error")
-                    return@onClick
+                ClickType.RIGHT -> {
+                    TextureManager.entities[child.uuid]!!.teleport(event.clicker.location)
+                    event.clicker.sendLang("tphere", child.name)
                 }
-                event.clicker.teleport(TextureManager.entities[child.uuid]!!.getLocation())
-                event.clicker.sendLang("tp", child.name)
+                else -> {}
             }
         }
     }
 
     @MenuComponent
-    private val tphere = MenuFunctionBuilder {
+    private val inv = MenuFunctionBuilder {
         onClick { (_, _, event, args) ->
             val child = args[0] as Child
             if (child.age >= child.deadline) return@onClick
-            if (event.virtualEvent().clickType == ClickType.LEFT) {
-                event.clicker.closeInventory()
-                if (!child.view) {
-                    event.clicker.sendLang("fail", child.name)
-                    return@onClick
-                }
-                if (TextureManager.entities[child.uuid] == null) {
-                    event.clicker.sendLang("internal-error")
-                    return@onClick
-                }
-                TextureManager.entities[child.uuid]!!.teleport(event.clicker.location)
-                event.clicker.sendLang("tphere", child.name)
+            if (event.virtualEvent().clickType != ClickType.LEFT && event.virtualEvent().clickType != ClickType.RIGHT) return@onClick
+            event.clicker.closeInventory()
+            if (!child.view) {
+                event.clicker.sendLang("fail", child.name)
+                return@onClick
+            }
+            if (TextureManager.entities[child.uuid] == null) {
+                event.clicker.sendLang("internal-error")
+                return@onClick
+            }
+            when (event.virtualEvent().clickType) {
+                ClickType.LEFT -> MetaEquipment.open(TextureManager.entities[child.uuid]!!, event.clicker, child)
+                ClickType.RIGHT -> ChildInventoryUI.open(event.clicker, child)
+                else -> {}
             }
         }
     }

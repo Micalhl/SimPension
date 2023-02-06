@@ -20,20 +20,26 @@ template:
     feature: Control$changeName
   'B':
     material: PLAYER_HEAD
-    name: "&f传送到孩子身边"
+    name: "&f传送"
+    lore:
+      - "&a左键 &7来传送到孩子身边"
+      - "&6右键 &7让孩子传到自己身边"
     feature:
       - ==: Head
-        texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmI0YzFkYmQ4NTQ0Y2ZhZWQ5NjNkZjRkMTM5YmM4YmFjNGI3NmFjNGJiYjMwYWI4NmY3NmZiYzMxYWI5YTcwIn19fQ=="
+        texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTJjY2I4NGY5YzBjYmIyZWI3YjlhYmJiN2E0ZmM3YjMxODYxNTBkNWU3ZGIwMTg1MmFjNmQ0OTVkZTE3ZTgxMiJ9fX0="
       - ==: Functional
         keyword: Control$tp
   'C':
     material: PLAYER_HEAD
-    name: "&f将孩子传送到自己身边"
+    name: "&f打开孩子的背包"
+    lore:
+      - "&a左键 &7打开孩子的装备栏"
+      - "&6右键 &7打开孩子的背包"
     feature:
       - ==: Head
-        texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTRjNDE3NDZhZjU1N2EyNGJlOGEwOTAzNjlhNTkxYWU2M2Q1Y2U5YzRiZjQwNWQzNTQyNDdkODEwYzdjNyJ9fX0="
+        texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTM3YTM1NTIyZjY3YjJhZjkyMzQ1NTkyODQ2YjcwMmI5YWZiOWQ3YzhkYmFkNWVhMTUwNjczYzllNDRkZTMifX19"
       - ==: Functional
-        keyword: Control$tphere
+        keyword: Control$inv
   'D':
     material: PLAYER_HEAD
     name: "&f让孩子走过来"

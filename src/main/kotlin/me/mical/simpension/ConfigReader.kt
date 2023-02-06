@@ -81,10 +81,10 @@ object ConfigReader {
     @ConfigNode("Died")
     var died = " &c(已去世)"
 
-    @ConfigNode("Yes")
+    @ConfigNode("YesOption")
     var yes = "是"
 
-    @ConfigNode("No")
+    @ConfigNode("NoOption")
     var no = "否"
 
     @ConfigNode("Book")
@@ -95,6 +95,12 @@ object ConfigReader {
 
     @ConfigNode("HaveNoBirthdayTip")
     var haveNoBirthdayTip = "&c尚未出生!"
+
+    @ConfigNode("EquipmentEditorTitle")
+    var equipmentEditorTitle = "请放入物品"
+
+    @ConfigNode("EquipmentEditorEmpty")
+    var equipmentEditorEmpty = "&f空"
 
     val database: ConfigurationSection
         get() = config.getConfigurationSection("Database") ?: error("no database section")

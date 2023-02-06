@@ -55,7 +55,7 @@ infix fun ItemStack.applyChild(child: Child): ItemStack {
         setDisplayName(displayName.replaceWithOrder(child.name, "name") + if (child.age >= child.deadline) ConfigReader.died.colored() else "")
     }
     if (child.texture.isNotEmpty() && NetworkManager.handler.containsKey(uuid)) {
-        result textured NetworkManager.getTextureUrlEnd(Bukkit.getOfflinePlayer(child.texture).uniqueId)
+        result textured NetworkManager.getTextureUrlEnd(uuid)
     }
     return result
 }

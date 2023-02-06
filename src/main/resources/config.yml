@@ -19,6 +19,8 @@ NoOption: "否"
 State: "&d[怀孕中]&r"
 HaveNoBirthdayTip: "&c尚未出生!"
 Book: "&5请在书中输入孩子名称"
+EquipmentEditorTitle: "请放入物品"
+EquipmentEditorEmpty: "&f空"
 Database:
   host: localhost
   port: 3306

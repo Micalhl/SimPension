@@ -18,10 +18,15 @@ package me.mical.simpension.manager
 
 import me.mical.simpension.ConfigReader
 import me.mical.simpension.database.PluginDatabase
+import me.mical.simpension.network.NetworkManager
 import me.mical.simpension.`object`.Child
 import me.mical.simpension.util.parseLoc
+import me.mical.simpension.util.serializeToBase64
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
+import org.serverct.parrot.parrotx.function.textured
 import taboolib.common.platform.function.info
 import taboolib.common.util.random
 import taboolib.common5.mirrorNow
@@ -108,10 +113,16 @@ object ChildManager {
             children.filter { it.age == -1 }.forEach {
                 if (it.birthday <= time) { // 要生了
                     it.age += 1
-                    TextureManager.display(it)
                     it.husband().player?.sendLang("birth")
                     it.wife().player?.sendLang("birth")
                     it.birthdayReal = System.currentTimeMillis()
+                    val head = ItemStack(Material.PLAYER_HEAD, 1)
+                    val uuid = Bukkit.getOfflinePlayer(it.texture).uniqueId
+                    if (NetworkManager.handler.containsKey(uuid)) {
+                        head textured NetworkManager.getTextureUrlEnd(uuid)
+                    }
+                    it.head = head.serializeToBase64()
+                    TextureManager.display(it)
                     if (it.age >= it.deadline) {
                         it.husband().player?.sendLang("died", it.name)
                         it.wife().player?.sendLang("died", it.name)

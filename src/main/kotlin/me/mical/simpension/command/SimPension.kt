@@ -16,13 +16,11 @@
  */
 package me.mical.simpension.command
 
+import me.mical.simpension.migrate.DatabaseMigrator
 import me.mical.simpension.ui.ChildListUI
 import org.bukkit.entity.Player
 import taboolib.common.platform.ProxyCommandSender
-import taboolib.common.platform.command.CommandBody
-import taboolib.common.platform.command.CommandHeader
-import taboolib.common.platform.command.mainCommand
-import taboolib.common.platform.command.subCommand
+import taboolib.common.platform.command.*
 import taboolib.common5.Mirror
 
 /**
@@ -42,10 +40,18 @@ object SimPension {
         }
     }
 
-    @CommandBody
+    @CommandBody(permission = "simpension.mirror", permissionDefault = PermissionDefault.OP)
     val mirror = subCommand {
         execute<ProxyCommandSender> { sender, _, _ ->
             Mirror.report(sender)
+        }
+    }
+
+    @CommandBody(permission = "simpension.migrate", permissionDefault = PermissionDefault.OP)
+    val migrate = subCommand {
+        execute<ProxyCommandSender> { sender, _, _ ->
+            DatabaseMigrator.migrate()
+            sender.sendMessage("迁移成功.")
         }
     }
 }

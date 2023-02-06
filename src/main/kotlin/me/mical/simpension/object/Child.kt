@@ -53,6 +53,13 @@ class Child {
     var follow = true
     var task = ""
     var birthdayReal = 0L
+    var inventory = ""
+    var head = ""
+    var chest = ""
+    var legs = ""
+    var boots = ""
+    var hand = ""
+    var offhand = ""
 
     fun save() {
         if (TextureManager.entities.containsKey(uuid)) {

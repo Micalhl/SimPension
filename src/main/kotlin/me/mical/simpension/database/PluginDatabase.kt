@@ -36,7 +36,7 @@ object PluginDatabase {
 
     private val host = HostSQL(ConfigReader.database)
 
-    val table = Table("simpension_data", host) {
+    val table = Table("simpension_children", host) {
         add("husband") {
             type(ColumnTypeSQL.VARCHAR, 255)
         }
@@ -85,6 +85,27 @@ object PluginDatabase {
         add("birthdayReal") {
             type(ColumnTypeSQL.BIGINT)
         }
+        add("inventory") {
+            type(ColumnTypeSQL.MEDIUMTEXT)
+        }
+        add("head") {
+            type(ColumnTypeSQL.MEDIUMTEXT)
+        }
+        add("chest") {
+            type(ColumnTypeSQL.MEDIUMTEXT)
+        }
+        add("legs") {
+            type(ColumnTypeSQL.MEDIUMTEXT)
+        }
+        add("boots") {
+            type(ColumnTypeSQL.MEDIUMTEXT)
+        }
+        add("hand") {
+            type(ColumnTypeSQL.MEDIUMTEXT)
+        }
+        add("offhand") {
+            type(ColumnTypeSQL.MEDIUMTEXT)
+        }
     }
 
     val dataSource = host.createDataSource()
@@ -130,10 +151,17 @@ object PluginDatabase {
                 set("follow", child.follow)
                 set("task", child.task)
                 set("birthdayReal", child.birthdayReal)
+                set("inventory", child.inventory)
+                set("head", child.head)
+                set("chest", child.chest)
+                set("legs", child.legs)
+                set("boots", child.boots)
+                set("hand", child.hand)
+                set("offhand", child.offhand)
             }
         } else {
-            table.insert(dataSource, "husband", "wife", "uuid", "name", "sex", "age", "deadline", "pregnant", "birthday", "lastBirthday", "texture", "lastLocation", "view", "follow", "task", "birthdayReal") {
-                value(child.husband.toString(), child.wife.toString(), child.uuid.toString(), child.name, child.sex, child.age, child.deadline, child.pregnant, child.birthday, child.lastBirthday, child.texture, child.lastLocation.parseString(), child.view, child.follow, child.task, child.birthdayReal)
+            table.insert(dataSource, "husband", "wife", "uuid", "name", "sex", "age", "deadline", "pregnant", "birthday", "lastBirthday", "texture", "lastLocation", "view", "follow", "task", "birthdayReal", "inventory", "head", "chest", "legs", "boots", "hand", "offhand") {
+                value(child.husband.toString(), child.wife.toString(), child.uuid.toString(), child.name, child.sex, child.age, child.deadline, child.pregnant, child.birthday, child.lastBirthday, child.texture, child.lastLocation.parseString(), child.view, child.follow, child.task, child.birthdayReal, child.inventory, child.head, child.chest, child.legs, child.boots, child.hand, child.offhand)
             }
         }
     }
