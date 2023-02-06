@@ -126,7 +126,7 @@ object MetaEquipment {
                 child.legs = entity.getEquipment(BKEquipment.LEGS)?.serializeToBase64() ?: ""
                 child.boots = entity.getEquipment(BKEquipment.FEET)?.serializeToBase64() ?: ""
                 child.hand = entity.getEquipment(BKEquipment.HAND)?.serializeToBase64() ?: ""
-                child.hand = entity.getEquipment(BKEquipment.OFF_HAND)?.serializeToBase64() ?: ""
+                child.offhand = entity.getEquipment(BKEquipment.OFF_HAND)?.serializeToBase64() ?: ""
                 child.save()
             }
         }
