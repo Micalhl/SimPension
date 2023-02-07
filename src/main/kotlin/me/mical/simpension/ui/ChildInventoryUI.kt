@@ -44,6 +44,7 @@ object ChildInventoryUI {
         val uuid = e.entity.uniqueId
         if (TextureManager.entities.none { it.value.uniqueId == uuid }) return
         val child = ChildManager.children.first { it.uuid == TextureManager.entities.filter { it.value.uniqueId == uuid }.keys.first() }
+        if (child.husband != e.player.uniqueId && child.wife != e.player.uniqueId) return
         open(e.player, child)
     }
 
