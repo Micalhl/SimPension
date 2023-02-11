@@ -160,6 +160,7 @@ object ChildManager {
                     it.husband().player?.sendLang("birthday", it.name, it.age)
                     it.wife().player?.sendLang("birthday", it.name, it.age)
                     it.save()
+                    if (it.age >= it.deadline) return@forEach
                     if (it.age >= ConfigReader.adult) {
                         TextureManager.destroy(it)
                         TextureManager.display(it) // 重新显示一下, 因为成年需要从 AdyVillager 变为 AdyHuman

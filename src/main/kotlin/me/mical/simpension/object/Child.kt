@@ -22,6 +22,7 @@ import me.mical.simpension.manager.TextureManager
 import me.mical.simpension.util.parseLoc
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
+import org.bukkit.entity.Entity
 import taboolib.common.util.random
 import taboolib.common.util.replaceWithOrder
 import taboolib.module.chat.colored
@@ -60,6 +61,8 @@ class Child {
     var boots = ""
     var hand = ""
     var offhand = ""
+
+    var entityAttacked: Entity? = null
 
     fun save() {
         if (TextureManager.entities.containsKey(uuid)) {
