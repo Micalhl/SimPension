@@ -29,7 +29,7 @@ taboolib {
     install("expansion-command-helper")
     install("expansion-player-database")
     classifier = null
-    version = "6.0.10-83"
+    version = "6.0.10-114"
 
     relocate("org.serverct.parrot.parrotx", "me.mical.simpension.taboolib.parrotx")
 }
