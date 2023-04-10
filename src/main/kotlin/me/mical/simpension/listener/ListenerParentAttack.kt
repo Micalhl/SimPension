@@ -42,7 +42,7 @@ object ListenerParentAttack {
             .filter { TextureManager.entities.containsKey(it.uuid) }
             .filter {
                 val inst = TextureManager.entities[it.uuid]!!
-                inst.getLocation().world == p.world && e.getLocation().distance(p.location) < 20.0
+                inst.getLocation().world == p.world && inst.getLocation().distance(p.location) < 20.0
             }
             .forEach { it.entityAttacked = t } // 标记
     }

@@ -19,12 +19,13 @@ package me.mical.simpension.command
 import me.mical.simpension.ConfigReader
 import me.mical.simpension.manager.SexManager
 import me.mical.simpension.util.MathUtils
-import me.xanium.gemseconomy.api.GemsEconomyAPI
 import org.bukkit.entity.Player
 import taboolib.common.platform.command.CommandBody
 import taboolib.common.platform.command.CommandHeader
 import taboolib.common.platform.command.int
 import taboolib.common.platform.command.mainCommand
+import taboolib.platform.compat.getBalance
+import taboolib.platform.compat.withdrawBalance
 import taboolib.platform.util.sendLang
 import java.util.*
 
@@ -38,8 +39,6 @@ import java.util.*
 @CommandHeader(name = "simpensionapi", permission = "simpension.api")
 object PensionAPI {
 
-    private val gemsEconomy = GemsEconomyAPI()
-
     @CommandBody
     val main = mainCommand {
         int("more") {
@@ -48,11 +47,11 @@ object PensionAPI {
                     val uuid = UUID.fromString(ctx["uuid"])
                     val money = MathUtils.calculate(ConfigReader.money, "more", ctx["more"].toInt())
                     if (SexManager.planning.contains(sender.uniqueId to uuid) || SexManager.planning.contains(uuid to sender.uniqueId)) return@execute
-                    if (gemsEconomy.getBalance(sender.uniqueId) < money) {
+                    if (sender.getBalance() < money) {
                         sender.sendLang("money-fail")
                         return@execute
                     }
-                    gemsEconomy.withdraw(sender.uniqueId, money)
+                    sender.withdrawBalance(money)
                     SexManager.planning.add(sender.uniqueId to uuid)
                     sender.sendLang("money")
                 }

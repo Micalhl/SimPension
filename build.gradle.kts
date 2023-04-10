@@ -13,7 +13,6 @@ taboolib {
         dependencies {
             name("MarriageMaster")
             name("Adyeshach")
-            name("GemsEconomy")
         }
     }
     install("common")

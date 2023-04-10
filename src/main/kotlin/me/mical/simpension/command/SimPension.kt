@@ -47,7 +47,7 @@ object SimPension {
         }
     }
 
-    @CommandBody(permission = "simpension.migrate", permissionDefault = PermissionDefault.OP)
+    // @CommandBody(permission = "simpension.migrate", permissionDefault = PermissionDefault.OP)
     val migrate = subCommand {
         execute<ProxyCommandSender> { sender, _, _ ->
             DatabaseMigrator.migrate()
